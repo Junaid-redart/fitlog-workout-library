@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FitLog - Workout Library
 
-## Getting Started
+FitLog is a workout management website built with Next.js. Users can explore different exercises, view workout details, create their daily workout plan, and save exercises for later.
 
-First, run the development server:
+The website is responsive and works on mobile, tablet, and desktop devices.
+
+## Technologies Used
+
+- Next.js (App Router)
+- React
+- TypeScript
+- Tailwind CSS
+- DaisyUI
+- Lucide React
+- React Toastify
+- Context API
+- Local Storage
+
+## Key Features
+
+1. **Workout Library:** Users can browse 12 different workouts fetched from an API.
+2. **Workout Details:** Each workout has its own details page with equipment, difficulty, duration, calories, rating, and instructions.
+3. **Today's Plan:** Users can add up to 5 workouts to their daily workout plan.
+4. **Save for Later:** Users can save workouts and access them from the Saved tab.
+5. **Live Statistics:** Exercises, total minutes, and calories update based on the selected tab.
+6. **Sorting:** Users can sort workouts by duration, calories, and rating.
+7. **Workout Management:** Users can mark planned workouts as done or remove workouts from their lists.
+8. **Local Storage:** Added and saved workouts remain available after refreshing the page.
+9. **Responsive Design:** The layout adjusts to mobile, tablet, and desktop screens.
+10. **Custom 404 Page:** Invalid routes display a custom page.
+
+## API Used
+
+All Workouts:
+https://api.abcz.workers.dev/api/fitlog
+
+Single Workout:
+https://api.abcz.workers.dev/api/fitlog/:id
+
+## Run Locally
+
+Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone YOUR_REPOSITORY_URL
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project folder:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cd fitlog
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Install dependencies:
 
-## Learn More
+```bash
+pnpm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the development server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open http://localhost:3000 in your browser.
 
-## Deploy on Vercel
+## Live Website
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Live Link: Add after deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## GitHub Repository
+
+Repository Link: Add after publishing
+
+## Author
+
+Developed as part of Assignment 6.
