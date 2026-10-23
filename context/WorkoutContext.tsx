@@ -20,6 +20,7 @@ interface WorkoutContextType {
   removeFromPlan: (id: number) => void;
   removeFromSaved: (id: number) => void;
   markAsDone: (id: number) => void;
+  hydrated: boolean;
 }
 
 const WorkoutContext = createContext<WorkoutContextType | null>(null);
@@ -39,7 +40,7 @@ const getStoredWorkouts = (key: string): IWorkout[] => {
 };
 
 // Check whether the app has hydrated
-const subscribe = () => () => {};
+const subscribe = () => () => { };
 const getClientSnapshot = () => true;
 const getServerSnapshot = () => false;
 
@@ -116,6 +117,7 @@ export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
   return (
     <WorkoutContext.Provider
       value={{
+        hydrated,
         plan: hydrated ? plan : [],
         saved: hydrated ? saved : [],
         addToPlan,

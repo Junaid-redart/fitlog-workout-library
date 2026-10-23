@@ -8,8 +8,6 @@ import { useWorkout } from "@/context/WorkoutContext";
 const Navbar = () => {
   const pathname = usePathname();
   const { plan, saved } = useWorkout();
-  console.log("Navbar Plan:", plan);
-console.log("Navbar Saved:", saved);
 
   const links = [
     { name: "Workout", path: "/" },

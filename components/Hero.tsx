@@ -37,13 +37,16 @@ const Hero = () => {
 
         {/* Right Image */}
         <div className="relative h-[260px] md:h-[400px]">
+
           <Image
             src="/images/hero.png"
             alt="Athlete training in the gym"
             fill
             priority
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="object-contain"
           />
+
         </div>
 
       </div>

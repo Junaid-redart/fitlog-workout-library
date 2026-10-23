@@ -12,6 +12,7 @@ import {
     X,
     ArrowUpRight,
     Bookmark,
+    LoaderCircle,
 } from "lucide-react";
 import { useWorkout } from "@/context/WorkoutContext";
 
@@ -22,6 +23,7 @@ const MyPlan = () => {
     const {
         plan,
         saved,
+        hydrated,
         removeFromPlan,
         removeFromSaved,
         markAsDone,
@@ -53,6 +55,22 @@ const MyPlan = () => {
         (total, workout) => total + workout.caloriesBurned,
         0
     );
+
+    if (!hydrated) {
+        return (
+            <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3">
+                <LoaderCircle
+                    size={40}
+                    className="animate-spin text-[#ccff00]"
+                />
+
+                <p className="text-sm text-gray-400">
+                    Loading workouts…
+                </p>
+            </div>
+        );
+    }
+
 
     return (
         <section className="mx-auto max-w-7xl px-4 py-10 md:px-8">
@@ -108,8 +126,8 @@ const MyPlan = () => {
                     <button
                         onClick={() => setActiveTab("plan")}
                         className={`border-b-2 pb-4 text-sm font-semibold ${activeTab === "plan"
-                                ? "border-[#ccff00] text-[#ccff00]"
-                                : "border-transparent text-gray-400"
+                            ? "border-[#ccff00] text-[#ccff00]"
+                            : "border-transparent text-gray-400"
                             }`}
                     >
                         Today&apos;s Plan ({plan.length})
@@ -118,8 +136,8 @@ const MyPlan = () => {
                     <button
                         onClick={() => setActiveTab("saved")}
                         className={`border-b-2 pb-4 text-sm font-semibold ${activeTab === "saved"
-                                ? "border-[#ccff00] text-[#ccff00]"
-                                : "border-transparent text-gray-400"
+                            ? "border-[#ccff00] text-[#ccff00]"
+                            : "border-transparent text-gray-400"
                             }`}
                     >
                         Saved ({saved.length})
@@ -171,7 +189,7 @@ const MyPlan = () => {
                         </Link>
                     </div>
                 ) : (
-                  sortedWorkouts.map((workout) => (
+                    sortedWorkouts.map((workout) => (
                         <div
                             key={workout.id}
                             className="flex flex-col gap-5 rounded-lg border border-white/10 bg-[#15181e] p-4 md:flex-row md:items-center"
