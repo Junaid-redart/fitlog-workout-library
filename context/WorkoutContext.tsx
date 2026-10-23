@@ -1,6 +1,13 @@
+
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import type { ReactNode } from "react";
 import type { IWorkout } from "@/types/workout";
 import { toast } from "react-toastify";
@@ -17,7 +24,7 @@ interface WorkoutContextType {
 
 const WorkoutContext = createContext<WorkoutContextType | null>(null);
 
-
+// Read data from localStorage
 const getStoredWorkouts = (key: string): IWorkout[] => {
   if (typeof window === "undefined") return [];
 
@@ -31,7 +38,18 @@ const getStoredWorkouts = (key: string): IWorkout[] => {
   }
 };
 
+// Check whether the app has hydrated
+const subscribe = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
+  const hydrated = useSyncExternalStore(
+    subscribe,
+    getClientSnapshot,
+    getServerSnapshot
+  );
+
   const [plan, setPlan] = useState<IWorkout[]>(() =>
     getStoredWorkouts("fitlogPlan")
   );
@@ -40,16 +58,14 @@ export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
     getStoredWorkouts("fitlogSaved")
   );
 
-  
+  // Save data after hydration
   useEffect(() => {
+    if (!hydrated) return;
+
     localStorage.setItem("fitlogPlan", JSON.stringify(plan));
-  }, [plan]);
-
-  useEffect(() => {
     localStorage.setItem("fitlogSaved", JSON.stringify(saved));
-  }, [saved]);
+  }, [plan, saved, hydrated]);
 
- 
   const addToPlan = (workout: IWorkout) => {
     const exists = plan.find((item) => item.id === workout.id);
 
@@ -67,7 +83,6 @@ export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
     toast.success("Added to today's plan!");
   };
 
- 
   const saveWorkout = (workout: IWorkout) => {
     const exists = saved.find((item) => item.id === workout.id);
 
@@ -80,26 +95,20 @@ export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
     toast.success("Workout saved!");
   };
 
-  
   const removeFromPlan = (id: number) => {
     const updatedPlan = plan.filter((item) => item.id !== id);
-
     setPlan(updatedPlan);
     toast.success("Workout removed from plan!");
   };
 
-  
   const removeFromSaved = (id: number) => {
     const updatedSaved = saved.filter((item) => item.id !== id);
-
     setSaved(updatedSaved);
     toast.success("Workout removed from saved!");
   };
 
-
   const markAsDone = (id: number) => {
     const updatedPlan = plan.filter((item) => item.id !== id);
-
     setPlan(updatedPlan);
     toast.success("Workout completed! Great job!");
   };
@@ -107,8 +116,8 @@ export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
   return (
     <WorkoutContext.Provider
       value={{
-        plan,
-        saved,
+        plan: hydrated ? plan : [],
+        saved: hydrated ? saved : [],
         addToPlan,
         saveWorkout,
         removeFromPlan,
@@ -120,7 +129,6 @@ export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
     </WorkoutContext.Provider>
   );
 };
-
 
 export const useWorkout = () => {
   const context = useContext(WorkoutContext);
