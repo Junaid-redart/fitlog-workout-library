@@ -1,4 +1,3 @@
-
 import { LoaderCircle } from "lucide-react";
 
 const Loading = () => {

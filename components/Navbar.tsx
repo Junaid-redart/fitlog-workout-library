@@ -1,12 +1,15 @@
-
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Dumbbell, Menu } from "lucide-react";
+import { useWorkout } from "@/context/WorkoutContext";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const { plan, saved } = useWorkout();
+  console.log("Navbar Plan:", plan);
+console.log("Navbar Saved:", saved);
 
   const links = [
     { name: "Workout", path: "/" },
@@ -31,11 +34,10 @@ const Navbar = () => {
             <Link
               key={link.path}
               href={link.path}
-              className={`rounded-full px-5 py-2 text-sm transition ${
-                pathname === link.path
+              className={`rounded-full px-5 py-2 text-sm transition ${pathname === link.path
                   ? "bg-[#ccff00]/10 text-[#ccff00]"
                   : "text-gray-400 hover:text-white"
-              }`}
+                }`}
             >
               {link.name}
             </Link>
@@ -50,7 +52,7 @@ const Navbar = () => {
           >
             Plan
             <span className="rounded-full bg-[#ccff00] px-2 py-1 font-bold text-black">
-              0
+              {plan.length}
             </span>
           </Link>
 
@@ -60,7 +62,7 @@ const Navbar = () => {
           >
             Saved
             <span className="rounded-full border border-gray-500 px-2 py-1 text-white">
-              0
+              {saved.length}
             </span>
           </Link>
         </div>
@@ -86,7 +88,9 @@ const Navbar = () => {
               </li>
             ))}
             <li>
-              <Link href="/my-plan">Plan: 0 | Saved: 0</Link>
+              <Link href="/my-plan">
+                Plan: {plan.length} | Saved: {saved.length}
+              </Link>
             </li>
           </ul>
         </div>
